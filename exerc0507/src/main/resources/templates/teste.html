@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<script language="JavaScript">
+
+    var domReady = function(ready) {
+        if (document.readyState != 'loading') return ready();
+        document.addEventListener('DOMContentLoaded', ready);
+        function _ready() {
+            document.removeEventListener('DOMContentLoaded', ready);
+            ready();
+        }
+    }
+
+    domReady(function() {
+        document.location.href = "index.html";
+    });
+</script>
+
+</body>
+</html>

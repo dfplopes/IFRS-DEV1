@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicial</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="assets/js/6cdbbf6f61.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-4">DEV 1</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/index.html" class="nav-link text-white" aria-current="page">
+                            <i class="fa fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="imc.html" class="nav-link active">
+                            <i class="fa fa-balance-scale"></i>
+                            Cálculo IMC
+                        </a>
+                    </li>
+                    <li>
+                        <a href="semana.html" class="nav-link text-white">
+                            <i class="fa fa-calendar-alt"></i>
+                            Dia da Semana
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calculadora.html" class="nav-link text-white">
+                            <i class="fa fa-calculator"></i>
+                            Calculadora
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+
+        </div>
+        <div class="col-9">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-black">
+                <main>
+                    <h1>Cálculo IMC</h1>
+                    <form>
+                        <div class="form-group">
+                            <label for="inputPeso">Peso</label>
+                            <input type="number" class="form-control" id="inputPeso" aria-describedby="pesoHelp" placeholder="Informe o seu peso">
+                            <small id="pesoHelp" class="form-text text-muted">Informe o seu peso em Kg. Ex.: 90</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAltura">Altura</label>
+                            <input type="number" class="form-control" id="inputAltura" aria-describedby="alturaHelp" placeholder="Informe o seu peso">
+                            <small id="alturaHelp" class="form-text text-muted">Informe a sua altura em M. Ex.: 1.90</small>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" id="inputMassa" class="form-control" placeholder="Massa" readonly>
+                                </div>
+                                <div class="col">
+                                    <input type="text" id="inputClassificacao" class="form-control" placeholder="Classificação" readonly>
+                                </div>
+                            </div>                        </div>
+                        <input type="button" class="btn btn-primary" id="btnCalc" value="Calcular">
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/bootstrap.bundle.min.js" ></script>
+<script src="assets/js/jquery-3.6.0.min.js" ></script>
+<script>
+    $(document).ready(function(){
+        $("#btnCalc").click(function(){
+
+            let peso = $("#inputPeso").val();
+            let altura = $("#inputAltura").val();
+
+            // console.log(peso + " - " + altura);
+            if (peso == "" || altura == "") {
+                alert("Informe os valores solicitados");
+                return false;
+            }
+
+            if (parseInt(peso) == 0 || parseFloat(altura) == 0) {
+                alert("Informe os valores solicitados");
+                return false;
+            }
+            $.ajax({
+                url: "/imc/" + peso + "/" + altura,
+                success(response){
+                    $("#inputMassa").val(response.massa);
+                    $("#inputClassificacao").val(response.classificacao);
+                }
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

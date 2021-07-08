@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicial</title>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <script src="assets/js/6cdbbf6f61.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-4">DEV 1</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/index.html" class="nav-link text-white" aria-current="page">
+                            <i class="fa fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="imc.html" class="nav-link text-white">
+                            <i class="fa fa-balance-scale"></i>
+                            Cálculo IMC
+                        </a>
+                    </li>
+                    <li>
+                        <a href="semana.html" class="nav-link text-white">
+                            <i class="fa fa-calendar-alt"></i>
+                            Dia da Semana
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calculadora.html" class="nav-link active">
+                            <i class="fa fa-calculator"></i>
+                            Calculadora
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+
+        </div>
+        <div class="col-9">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-black">
+                <main>
+                    <h1>Calculadora</h1>
+                    <form>
+                        <fieldset class="form-group">
+                            <div class="row">
+
+                                <legend class="col-form-label col-sm-2 pt-0">Operações</legend>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radOper" id="radOper1"
+                                               value="adicao" checked>
+                                        <label class="form-check-label" for="radOper1">
+                                            +
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radOper" id="radOper2"
+                                               value="subtracao">
+                                        <label class="form-check-label" for="radOper2">
+                                            -
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radOper" id="radOper3"
+                                               value="multiplicacao">
+                                        <label class="form-check-label" for="radOper3">
+                                            *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radOper" id="radOper4"
+                                               value="divisao">
+                                        <label class="form-check-label" for="radOper4">
+                                            /
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <label for="inputNum1">Primeiro Número</label>
+                            <input type="number" class="form-control" id="inputNum1" placeholder="Primeiro Número">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNum2">Segundo Número</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" id="operador">+</div>
+                                </div>
+                                <input type="number" class="form-control" id="inputNum2" placeholder="Segundo Número">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text" id="resultado">=</div>
+                                </div>
+                                <input type="text" class="form-control" id="inputResultado" placeholder="Resultado" readonly>
+                            </div>
+                        </div>
+                        <input type="button" class="btn btn-primary" id="btnCalc" value="Calcular">
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#radOper1").click(function () {
+            $("#operador").html("+");
+        });
+        $("#radOper2").click(function () {
+            $("#operador").html("-");
+        });
+        $("#radOper3").click(function () {
+            $("#operador").html("*");
+        });
+        $("#radOper4").click(function () {
+            $("#operador").html("/");
+        });
+        $("#btnCalc").click(function () {
+
+            let num1 = $("#inputNum1").val();
+            let num2 = $("#inputNum2").val();
+            let operacao = $("[name='radOper']:checked").val();
+
+            if (num1 == "" || num2 == "") {
+                alert("Informe os valores solicitados");
+                return false;
+            }
+
+            if (parseFloat(num1) == 0 || parseFloat(num2) == 0) {
+                alert("Informe os valores solicitados");
+                return false;
+            }
+            $.ajax({
+                url: "/calculadora/" + operacao + "?n1=" + num1 + "&n2=" + num2,
+                success(response) {
+                    $("#inputResultado").val(response.resultado);
+                }
+            });
+
+        });
+    });
+</script>
+</body>
+</html>
